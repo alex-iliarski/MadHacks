@@ -1,4 +1,3 @@
-from doctor_handler import Speciality, Gender, Insurence, Language
 from dotenv import load_dotenv, find_dotenv
 import os
 from dist import distance
@@ -19,22 +18,28 @@ doctors_collection = doctors_db.doctors_collection
 def find_doctors(
     zip_code,
     within_miles=50,
-    specialization=Speciality.GENERAL_PRACTITIONER,
-    years_of_experience=3,
-    insurence=Insurence.ALINA_HEALTH,
-    language=Language.ENGLISH,
-    gender=Gender.MALE,
+    specialization=[],
+    years_of_experience=1,
+    insurence="",
+    language="",
+    gender="",
 ):
     query = {
-        "specialty": specialization.name,
+        "first_name": {"$exists": True},
         "years_of_experience": {"$gte": years_of_experience},
-        "insurance_accepted": insurence.name,
-        "languages": language.name,
-        "gender": gender.name,
     }
+    if language != "":
+        query["languages"] = language
+    if len(specialization) != 0:
+        query["specialty"] = {"$in": specialization}
+    if insurence != "":
+        query["insurance_accepted"] = insurence
+    if gender != "":
+        query["gender"] = gender
+
     docs = []
     for doctor in doctors_collection.find(query):
-        if distance(zip_code, doctor["address"]["zip_code"]) <= within_miles:
+        if distance(zip_code, doctor["address"]["zip"]) <= within_miles:
             docs.append(doctor)
     return docs
 
