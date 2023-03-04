@@ -1,5 +1,7 @@
 from webpage import app
 from flask import render_template, redirect, url_for, flash
+from webpage import db
+from flask_login import login_user, logout_user, login_required
 
 @app.route('/')
 @app.route('/home')
@@ -14,6 +16,4 @@ def about():
 def contact():
     return render_template('contact.html')
 
-# @app.route('/register')
-# def register():
-#     return render_template('register.html')
+
