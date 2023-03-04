@@ -1,30 +1,10 @@
 from doctor_handler import Speciality, Gender, Insurence, Language
 from dotenv import load_dotenv, find_dotenv
 import os
+from dist import distance
 import pprint
 import certifi
 from pymongo import MongoClient
-
-zip_code = 55345
-within_miles = 15
-specialization = Speciality.GENERAL_PRACTITIONER
-years_of_experience = 3
-insurence = Insurence.ALINA_HEALTH
-language = Language.ENGLISH
-gender = Gender.MALE
-
-print(specialization.name)
-
-query = {
-    "specialty": specialization.name,
-    "years_of_experience": {"$gte": years_of_experience},
-    "insurance_accepted": insurence.name,
-    "languages": language.name,
-    "gender": gender.name,
-}
-
-
-# todo search for doctors in a given zip code
 
 load_dotenv(find_dotenv())
 
@@ -36,11 +16,30 @@ doctors_db = client.doctors
 doctors_collection = doctors_db.doctors_collection
 
 
-def get_doctors_with_query(query):
-    return doctors_collection.find(query)
+def find_doctors(
+    zip_code,
+    within_miles=50,
+    specialization=Speciality.GENERAL_PRACTITIONER,
+    years_of_experience=3,
+    insurence=Insurence.ALINA_HEALTH,
+    language=Language.ENGLISH,
+    gender=Gender.MALE,
+):
+    query = {
+        "specialty": specialization.name,
+        "years_of_experience": {"$gte": years_of_experience},
+        "insurance_accepted": insurence.name,
+        "languages": language.name,
+        "gender": gender.name,
+    }
+    docs = []
+    for doctor in doctors_collection.find(query):
+        if distance(zip_code, doctor["address"]["zip_code"]) <= within_miles:
+            docs.append(doctor)
+    return docs
 
 
 printer = pprint.PrettyPrinter(indent=4)
 
-for doctor in get_doctors_with_query(query):
+for doctor in find_doctors("53792", within_miles=10):
     printer.pprint(doctor)

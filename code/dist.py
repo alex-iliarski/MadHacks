@@ -20,6 +20,7 @@ def distance(origin, destination):
 
 
 print(distance("seattle", "washington dc"))
+print(distance("53792", "53792"))
 print(
     distance(
         "Venture, 619 N Segoe Rd, Madison, WI 53705",
