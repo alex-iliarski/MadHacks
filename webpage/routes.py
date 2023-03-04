@@ -18,7 +18,7 @@ def contact():
     return render_template('contact.html')
 
 
-@app.route('/docquery')
+@app.route('/docquery', methods=["GET", "POST"])
 def docquery():
     form = QueryForm()
 
@@ -34,3 +34,14 @@ def docquery():
             flash(f'There was an error with creating a user: {err_msg}', category='danger')
 
     return render_template('docquery.html', form=form)
+
+# <!-- {{ form.lang.label() }}
+#                 {{ form.zipcode(<select class="form-select" aria-label="Default select example">
+#                     <option selected>Open this select menu</option>
+#                     <option value="1">One</option>
+#                     <option value="2">Two</option>
+#                     <option value="3">Three</option>
+#                   </select>) }}
+#                  -->
+                
+#                 <!-- {{ form.submit(class="btn btn-lg btn-primary btn-block") }} -->
