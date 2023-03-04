@@ -13,12 +13,13 @@ insurence = Insurence.ALINA_HEALTH
 language = Language.ENGLISH
 gender = Gender.MALE
 
+print(specialization.name)
 
 query = {
-    "specialization": specialization.name,
+    "specialty": specialization.name,
     "years_of_experience": {"$gte": years_of_experience},
-    "insurence": insurence.name,
-    "language": language.name,
+    "insurance_accepted": insurence.name,
+    "languages": language.name,
     "gender": gender.name,
 }
 
