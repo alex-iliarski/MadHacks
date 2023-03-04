@@ -7,7 +7,7 @@ load_dotenv(find_dotenv())
 
 
 key = os.environ.get("GOOGLE_MAPS_API_KEY")
-gmaps = googlemaps.Client(key=str(key))
+gmaps = googlemaps.Client(key=key)
 now = datetime.now()
 
 
