@@ -13,9 +13,12 @@ class QueryForm(FlaskForm):
     zipcode = StringField(label='Zipcode:', validators=[Length(min=5, max=5), DataRequired()])
     specialization = SelectMultipleField(label='Specialization:', choices=[('gen_prac', 'General Practitioner'), ('obgyn', 'OBGYN'), ('optomologist', 'Optomologist')], validators=[])
     years_experience = StringField(label='Minimum Years of Experience:', validators=[Length(max=2)])
-    insurance = SelectMultipleField(label='Insurance:', choices=[('aetna', 'Aetna'), ('blue_cross', 'Blue Cross'), ('cigna', 'Cigna'), ('humana', 'Humana'), ('medicare', 'Medicare'), ('medicaid', 'Medicaid'), ('united_healthcare', 'United Healthcare'), ('alina', 'Alina Health')], validators=[])
-    lang = SelectField(label="Preferred Language: ", choices=[('english', 'English'), ('spanish', 'Spanish')], validators=[])
-    gender = SelectMultipleField(label="Preffered Gender: ", choices=[('nopref', 'No Preference'), ('male', 'Male'), ('female', 'Female'), ('other', 'Other')], validators=[])
+    insurance = SelectMultipleField(label='Insurance:', choices=[('aetna', 'Aetna'), ('alina', 'Alina Health'), ('blue_cross', 'Blue Cross'), ('cigna', 'Cigna'), ('humana', 'Humana'), ('medicare', 'Medicare'), ('medicaid', 'Medicaid'), ('united_healthcare', 'United Healthcare')], validators=[])
+    lang = SelectField(label="Preferred Language: ", choices=[('english', 'English'), ('spanish', 'Spanish'), ('chinese', 'Mandarin Chinese'), ('russian', 'Russian')], validators=[])
+    gender = SelectMultipleField(label="Preferred Gender: ", choices=[('nopref', 'No Preference'), ('male', 'Male'), ('female', 'Female'), ('other', 'Other')], validators=[])
     
     submit = SubmitField(label='Search For Doctors')
+
+
+   
 
