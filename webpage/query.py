@@ -27,12 +27,12 @@ def find_doctors(
         "first_name": {"$exists": True},
         "years_of_experience": {"$gte": years_of_experience},
     }
-    # if language != "":
-    #     query["languages"] = language
-    # if len(specialization) != 0:
-    #     query["specialty"] = {"$in": specialization}
-    # if insurence != "":
-    #     query["insurance_accepted"] = insurence
+    if language != "":
+        query["languages"] = language
+    if len(specialization) != 0:
+        query["specialty"] = {"$in": specialization}
+    if insurence != "":
+        query["insurance_accepted"] = insurence
     if gender != "" and gender != "NO_PREFERENCE":
         query["gender"] = gender
 
