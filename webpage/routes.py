@@ -48,7 +48,8 @@ def about():
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    form = TextMessageForm()
+    return render_template('contact.html', form=form)
 
 
 @app.route("/docquery", methods=["GET", "POST"])
