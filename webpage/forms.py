@@ -14,7 +14,7 @@ class QueryForm(FlaskForm):
         if not zipcode.data.isdigit():
             raise ValidationError('Zipcode must be numeric.')
         
-    
+
 
     specializations = ["CARDIOLOGIST",
         "DENTIST",
