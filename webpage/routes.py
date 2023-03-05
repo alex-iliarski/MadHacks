@@ -1,13 +1,11 @@
 from webpage import app
-<<<<<<< HEAD
 from flask import render_template, redirect, url_for, flash
 from webpage import db
 from webpage.forms import QueryForm, TextMessageForm
-=======
 from flask import render_template, flash
 from webpage.forms import QueryForm
->>>>>>> a75f75481263fa0609af15eed48dd8854c727993
 from webpage.query import find_doctors, get_doc_by_id
+from webpage.twillio import message_doc
 
 
 @app.route('/')
@@ -66,8 +64,19 @@ def docquery():
 def query_results(doctors):
     return render_template('query_results.html', doctors = doctors)
 
-@app.route('/doctor/<doctor_id>')
+@app.route('/doctor/<doctor_id>', methods=['GET', 'POST'])
 def doctor(doctor_id):
     form = TextMessageForm()
     doc = get_doc_by_id(doctor_id)
+
+    if form.validate_on_submit():
+        phone_number = form.phone.data
+        name = form.name.data
+        message = "Message from " + name + "at " + phone_number + ": " + form.message.data
+
+        message_doc(doctor_id, message)
+
+        flash(f'Message sent to doctor', category='success')
+        return redirect(url_for('doctor/'+doctor_id, form=form, doctor=doc))
+
     return render_template('doctor.html', form=form, doctor = doc)
