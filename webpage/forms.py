@@ -43,7 +43,7 @@ class QueryForm(FlaskForm):
     
     insurances = ["ALINA_HEALTH", "ALLIANZ", "ASANATOARE"]
     langs = ["ENGLISH", "FRENCH", "GERMAN", "ITALIAN", "SPANISH"]
-    genders = ["NO_PREFERENCE", "MALE", "FEMALE", "OTHER"]
+    genders = ["NO_PREFERENCE", "MALE", "FEMALE", "NON_BINARY"]
     
     specializations_choices = [(specialization, clean(specialization)) for specialization in specializations]
     insurances_choices = [(insurance, clean(insurance)) for insurance in insurances]

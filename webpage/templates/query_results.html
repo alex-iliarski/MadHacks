@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Results of Your Search!
+{% endblock %}
+
+{% block page_content %}
+    <div class = "text-center">
+        <div class="container">
+            <h1>Results of Your Search!</h1>
+
+            {% for doc in doctors %}
+                {{ doc.name }}
+            {% endfor %}
+
+
+            <br>
+
+            <div class="checkbox mb-3">
+                <h6>Not seeing what you are looking for?</h6>
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('docquery') }}">Re-Try Search</a>
+             </div>
+
+
+        </div>
+    </div>
+{% endblock %}
