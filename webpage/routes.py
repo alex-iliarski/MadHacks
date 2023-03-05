@@ -118,9 +118,9 @@ def doctor(doctor_id):
     if form.validate_on_submit():
         phone_number = form.phone.data
         name = form.name.data
-        message = "Message from " + name + "at " + phone_number + ": " + form.message.data
-
-        message_doc(doctor_id, message)
+        message = "Message from " + name + " at " + phone_number + ": " + form.message.data
+        print('asdfasjdhkj')
+        message_doc(doc, message)
 
         flash(f'Message sent to doctor', category='success')
         return redirect(url_for('doctor/'+doctor_id, form=form, doctor=doc))
