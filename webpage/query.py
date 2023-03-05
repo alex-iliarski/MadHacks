@@ -49,3 +49,6 @@ def get_doc_by_id(doc_id):
     if ret == None:
         raise Exception("No doctor with that id")
     return ret
+
+def get_all_docs():
+    return doctors_collection.find({})

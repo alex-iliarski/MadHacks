@@ -18,3 +18,7 @@ def distance(origin, destination):
         return 1
     return round(float(dist[:-3].replace(",", "")))
 
+
+def get_lat_long(zip_code):
+    geocode_result = gmaps.geocode(zip_code)
+    return geocode_result[0]["geometry"]["location"]

@@ -8,51 +8,37 @@
     <div class = "text-center">
         <div class="container">
             <h1>Search for a Doctor to your Preferences!</h1>
-
             <form method="POST" style="color:white">
                 {{ form.hidden_tag() }}
-
                 <!-- can add logo here if wanted -->
-                <img class="mb-4" src="" alt=""> 
-
-                <h1 class="h3 mb-3 font-weight-normal">
-                    Please Enter your Preferences:
-                </h1>
+                <img class="mb-4" src="" alt="">
                 <br>
-                {{ form.zipcode.label() }}
-                {{ form.zipcode(class="form-control", placeholder="zipcode") }}
-    
-
+                {{ form.zipcode(class="form-control", placeholder="Zipcode") }}
                 <br>
-                {{ form.distance.label() }}
-                {{ form.distance(class="form-control", placeholder="distance") }}
-
                 <br>
-                {{ form.specialization.label() }}
-                {{ form.specialization(class="form-control", placeholder="specialization") }}
-
+                {{ form.distance(class="form-control", placeholder="Distance") }}
                 <br>
-                {{ form.years_experience.label() }}
-                {{ form.years_experience(class="form-control", placeholder="years of experience") }}
-              
+                <br>
+                {{ form.specialization(class="form-control", placeholder="Specialization") }}
+                <br>
+                <br>
+                {{ form.years_experience(class="form-control", placeholder="Years of experience") }}
                 <br>
                 {{ form.insurance.label() }}
-                {{ form.insurance(class="form-control", placeholder="your insurance") }}
-
+                <br>
+                {{ form.insurance(class="form-control", placeholder="Preferred insurance") }}
                 <br>
                 {{ form.lang.label() }}
-                {{ form.lang(class="form-control", placeholder="language") }}
-
+                <br>
+                {{ form.lang(class="form-control", placeholder="Language") }}
                 <br>
                 {{ form.gender.label() }}
-                {{ form.gender(class="form-control", placeholder="gender") }}
-
+                <br>
+                {{ form.gender(class="form-control", placeholder="Gender") }}
+                <br>
                 <br>
                 {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
-    
             </form>
-
-
         </div>
     </div>
 {% endblock %}

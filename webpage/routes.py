@@ -4,14 +4,22 @@ from webpage import db
 from webpage.forms import QueryForm, TextMessageForm
 from flask import render_template, flash
 from webpage.forms import QueryForm
+>>>>>>> a75f75481263fa0609af15eed48dd8854c727993
 from webpage.query import find_doctors, get_doc_by_id
-from webpage.twillio import message_doc
 
 
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    map = Map(
+        identifier="map",
+        lat=43.0666775,
+        lng=-89.4066381,
+        zoom=12,
+        style="height:800px;width:100%;margin:0;",
+        markers=make_all_markers()
+    )
+    return render_template('home.html', map=map)
 
 @app.route('/about')
 def about():

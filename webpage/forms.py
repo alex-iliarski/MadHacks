@@ -14,7 +14,7 @@ class QueryForm(FlaskForm):
         if not zipcode.data.isdigit():
             raise ValidationError('Zipcode must be numeric.')
         
-    
+
 
     specializations = ["CARDIOLOGIST",
         "DENTIST",
@@ -41,9 +41,9 @@ class QueryForm(FlaskForm):
         "SURGEON",
         "UROLOGIST"]
     
-    insurances = ["ALINA_HEALTH", "ALLIANZ", "ASANATOARE"]
-    langs = ["ENGLISH", "FRENCH", "GERMAN", "ITALIAN", "SPANISH"]
-    genders = ["NO_PREFERENCE", "MALE", "FEMALE", "NON_BINARY"]
+    insurances = ["", "ALINA_HEALTH", "ALLIANZ", "ASANATOARE"]
+    langs = ["", "ENGLISH", "FRENCH", "GERMAN", "ITALIAN", "SPANISH"]
+    genders = ["", "NO_PREFERENCE", "MALE", "FEMALE", "NON_BINARY"]
     
     specializations_choices = [(specialization, clean(specialization)) for specialization in specializations]
     insurances_choices = [(insurance, clean(insurance)) for insurance in insurances]
