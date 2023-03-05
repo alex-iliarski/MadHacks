@@ -46,13 +46,13 @@
                                 </tr>
                                 <tr>
                                     <th class="text-right" scope="row">Specialty: </th>
-                                    <td align="left">{{ doctor["specialty"].title() }}</td>
+                                    <td align="left">{{ doctor["specialty"].title().replace('_', ' ') }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-right" scope="row">Insurances Accepted: </th>
                                     <td align="left">
                                         {% for ins in doctor["insurance_accepted"] %}
-                                            {{ ins.title() }}
+                                            {{ ins.title().replace('_', ' ') + ", " }}
                                         {% endfor %}
                                     </td>
                                 </tr>
