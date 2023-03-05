@@ -4,14 +4,27 @@ from webpage import db
 from webpage.forms import QueryForm, TextMessageForm
 from flask import render_template, flash
 from webpage.forms import QueryForm
-<<<<<<< HEAD
->>>>>>> a75f75481263fa0609af15eed48dd8854c727993
 from webpage.query import find_doctors, get_doc_by_id
-=======
 from webpage.dist import get_lat_long
 from webpage.query import find_doctors, get_doc_by_id, get_all_docs
 from flask_googlemaps import Map, GoogleMaps, icons
->>>>>>> 3daee376177774befa67b49c5cb3a9ef3c7c6fc9
+from webpage.twillio import message_doc
+from random import randint
+
+def make_all_markers():
+    ret = []
+    all_doctors = get_all_docs()
+    for doctor in all_doctors:
+        plus_or_minus = lambda: 1 if randint(0, 1) == 0 else -1
+        rand_offset = randint(0, 100) / 100000 * plus_or_minus()
+        loc_dict = get_lat_long(doctor["address"]["street"]+" "+doctor["address"]["city"]+" "+doctor["address"]["state"]+" "+doctor["address"]["zip"])
+        ret.append({
+            'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            'lat': loc_dict["lat"]+rand_offset,
+            'lng': loc_dict["lng"]+rand_offset,
+            'infobox': f"<p>{doctor['first_name']} {doctor['last_name']}</p>"
+        })
+    return ret
 
 
 @app.route('/')
@@ -85,7 +98,6 @@ def query_results(doctors):
     return render_template("query_results.html", doctors=doctors)
 
 
-<<<<<<< HEAD
 @app.route('/doctor/<doctor_id>', methods=['GET', 'POST'])
 def doctor(doctor_id):
     form = TextMessageForm()
@@ -102,10 +114,3 @@ def doctor(doctor_id):
         return redirect(url_for('doctor/'+doctor_id, form=form, doctor=doc))
 
     return render_template('doctor.html', form=form, doctor = doc)
-=======
-@app.route("/doctor/<doctor_id>")
-def doctor(doctor_id):
-    form = TextMessageForm()
-    doc = get_doc_by_id(doctor_id)
-    return render_template("doctor.html", form=form, doctor=doc)
->>>>>>> 3daee376177774befa67b49c5cb3a9ef3c7c6fc9
