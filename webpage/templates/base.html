@@ -26,7 +26,10 @@
                     <a class="nav-link" href="{{ url_for('docquery') }}">Find a Doctor</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('about') }}">About us</a>
+                    <a class="nav-link" href="{{ url_for('about') }}">Our Mission</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('contact') }}">Contact us</a>
                 </li>
             </ul>
         </div>
@@ -55,7 +58,11 @@
         border-top-right-radius: 15px;
         border-bottom-right-radius: 15px;
     }
+    .navbar-nav > li{
+        margin-left: 100px;
+    }
     body {
+        font-family: "Proxima Nova";
         background-color: rgb(30, 30, 30);
         color: white;
     }
