@@ -1,9 +1,6 @@
 from webpage import app
-from flask import render_template, redirect, url_for, flash
-from webpage import db
+from flask import render_template, redirect, url_for, flash, request
 from webpage.forms import QueryForm, TextMessageForm
-from flask import render_template, flash
-from webpage.forms import QueryForm
 from webpage.query import find_doctors, get_doc_by_id
 from webpage.dist import get_lat_long
 from webpage.query import find_doctors, get_doc_by_id, get_all_docs
@@ -11,24 +8,35 @@ from flask_googlemaps import Map, GoogleMaps, icons
 from webpage.twillio import message_doc
 from random import randint
 
+
 def make_all_markers():
     ret = []
     all_doctors = get_all_docs()
     for doctor in all_doctors:
         plus_or_minus = lambda: 1 if randint(0, 1) == 0 else -1
         rand_offset = randint(0, 100) / 100000 * plus_or_minus()
-        loc_dict = get_lat_long(doctor["address"]["street"]+" "+doctor["address"]["city"]+" "+doctor["address"]["state"]+" "+doctor["address"]["zip"])
-        ret.append({
-            'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-            'lat': loc_dict["lat"]+rand_offset,
-            'lng': loc_dict["lng"]+rand_offset,
-            'infobox': f"<p>{doctor['first_name']} {doctor['last_name']}</p>"
-        })
+        loc_dict = get_lat_long(
+            doctor["address"]["street"]
+            + " "
+            + doctor["address"]["city"]
+            + " "
+            + doctor["address"]["state"]
+            + " "
+            + doctor["address"]["zip"]
+        )
+        ret.append(
+            {
+                "icon": "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+                "lat": loc_dict["lat"] + rand_offset,
+                "lng": loc_dict["lng"] + rand_offset,
+                "infobox": f"<p>{doctor['first_name']} {doctor['last_name']}</p>",
+            }
+        )
     return ret
 
 
-@app.route('/')
-@app.route('/home')
+@app.route("/")
+@app.route("/home")
 def home():
     map = Map(
         identifier="map",
@@ -36,7 +44,7 @@ def home():
         lng=-89.4066381,
         zoom=12,
         style="height:800px;width:100%;margin:0;",
-        markers=make_all_markers()
+        markers=make_all_markers(),
     )
     return render_template("home.html", map=map)
 
@@ -49,7 +57,7 @@ def about():
 @app.route("/contact")
 def contact():
     form = TextMessageForm()
-    return render_template('contact.html', form=form)
+    return render_template("contact.html", form=form)
 
 
 @app.route("/docquery", methods=["GET", "POST"])
@@ -82,7 +90,6 @@ def docquery():
             query_years_experience = 0
         else:
             query_years_experience = int(query_years_experience)
-        
 
         docs = find_doctors(
             query_zipcode,
@@ -110,19 +117,34 @@ def query_results(doctors):
     return render_template("query_results.html", doctors=doctors)
 
 
-@app.route('/doctor/<doctor_id>', methods=['GET', 'POST'])
+@app.route("/doctor/<doctor_id>", methods=["GET", "POST"])
 def doctor(doctor_id):
     form = TextMessageForm()
     doc = get_doc_by_id(doctor_id)
+    if request.method == "POST":
+        if form.validate_on_submit():
+            phone_number = form.phone.data
+            name = form.name.data
+            message = (
+                "Message from "
+                + name
+                + " at "
+                + phone_number
+                + ": "
+                + form.message.data
+            )
 
-    if form.validate_on_submit():
-        phone_number = form.phone.data
-        name = form.name.data
-        message = "Message from " + name + " at " + phone_number + ": " + form.message.data
-        print('asdfasjdhkj')
-        message_doc(doc, message)
+            message_doc(doc, message)
+            flash(
+                "Message sucessfully sent to doctor, they should be getting back to you shorlty!",
+                category="success",
+            )
+            return redirect(url_for("doctor", doctor_id=doctor_id))
+        flash(
+            "Message not sent, There was an error in your phone number",
+            category="danger",
+        )
+        return redirect(url_for("doctor", doctor_id=doctor_id))
 
-        flash(f'Message sent to doctor', category='success')
-        return redirect(url_for('doctor/'+doctor_id, form=form, doctor=doc))
-
-    return render_template('doctor.html', form=form, doctor = doc)
+    else:
+        return render_template("doctor.html", form=form, doctor=doc)
