@@ -1,0 +1,7 @@
+flask >= 2.2.3
+flask-googlemaps >= 0.4.1
+Flask-Login >= 0.6.2
+FLask-WTF >= 1.1.1
+pymongo >= 4.3.3
+python-dotenv >= 1.0.0
+googlemaps >= 4.10.0
