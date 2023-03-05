@@ -20,8 +20,8 @@ def make_all_markers():
             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
             'lat': loc_dict["lat"]+rand_offset,
             'lng': loc_dict["lng"]+rand_offset,
-            'infobox': f"""<b style=\"color:black; float:left;\">{doctor['first_name']} {doctor['last_name']}</b> 
-            <img src=\"{doctor['avatar_url']}\" style=\"float:left;\"> 
+            'infobox': f"""<b style=\"color:black; float:left;\">{doctor['first_name']} {doctor['last_name']}</b> <br>
+            <img src=\"{doctor['avatar_url']}\" style=\"float:left;\"> <br>
             <a href="{url_for('doctor', doctor_id=doctor["_id"])}" style=\"float:left;\">More Info</a>"""
         })
     return ret
@@ -36,8 +36,8 @@ def make_specific_markers(doctors):
             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
             'lat': loc_dict["lat"]+rand_offset,
             'lng': loc_dict["lng"]+rand_offset,
-            'infobox': f"""<b style=\"color:black; float:left;\">{doctor['first_name']} {doctor['last_name']}</b> 
-            <img src=\"{doctor['avatar_url']}\" style=\"float:left;\"> 
+            'infobox': f"""<b style=\"color:black; float:left;\">{doctor['first_name']} {doctor['last_name']}</b> <br>
+            <img src=\"{doctor['avatar_url']}\" style=\"float:left;\"> <br>
             <a href="{url_for('doctor', doctor_id=doctor["_id"])}" style=\"float:left;\">More Info</a>"""
         })
     return ret
