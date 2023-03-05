@@ -60,6 +60,12 @@ class QueryForm(FlaskForm):
     
     submit = SubmitField(label='Search For Doctors')
 
-
+class MessageForm(FlaskForm):
+    name = StringField(label='Name:', validators=[DataRequired()])
+    # email = StringField(label='Email:', validators=[Email(), DataRequired()])
+    email = StringField(label='Email:', validators=[ DataRequired()])
+    subject = StringField(label='Subject:', validators=[DataRequired()])
+    message = StringField(label='Message:', validators=[DataRequired()])
+    submit = SubmitField(label='Send Message')
    
 

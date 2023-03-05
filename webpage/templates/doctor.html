@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Doctor Information!
+{% endblock %}
+
+{% block page_content %}
+    <div class = "text-center">
+        <div class="container">
+            <h1>
+                {{ doctor["first_name"] }}
+                {{ doctor["last_name"] }}
+            </h1>
+
+            <br>
+            <div >
+                <h6>Address</h6>
+                {{ doctor["address"] }}
+                <br>
+                <h6>Phone Number</h6>
+                {{ doctor["phone_number"] }}
+                <br>
+                <h6>Specialty</h6>
+                {{ doctor["specialty"] }}
+                <br>
+                <h6>Insurance</h6>
+                {{ doctor["insurance"] }}
+                <br>
+                <h6>Accepting New Patients</h6>
+                {{ doctor["accepting_new_patients"] }}
+                <br>
+                <h6>Rating</h6>
+                {{ doctor["rating"] }}
+                <br>
+                <h6>Number of Reviews</h6>
+                {{ doctor["number_of_reviews"] }}
+                <br>
+                <h6>Website</h6>
+                {{ doctor["website"] }}
+                <br>
+                <h6>Hours</h6>
+                {{ doctor["hours"] }}
+                <br>
+            </div>
+
+            <br>
+        
+            <form method="POST" style="color:white">
+                {{ form.hidden_tag() }}
+
+                <!-- can add picture of doctor here if wanted -->
+                <img class="mb-4" src="" alt=""> 
+
+                <h1 class="h3 mb-3 font-weight-normal">
+                    Send a message to {{ doctor["first_name"] }} {{ doctor["last_name"] }} to schedule an appointment:
+                </h1>
+                <br>
+                {{ form.name.label() }}
+                {{ form.name(class="form-control", placeholder="Your Name") }}
+    
+
+                <br>
+                {{ form.email.label() }}
+                {{ form.email(class="form-control", placeholder="Your Email Address") }}
+
+                <br>
+                {{ form.subject.label() }}
+                {{ form.subject(class="form-control", placeholder="Subject of Message") }}
+
+                <br>
+                {{ form.message.label() }}
+                {{ form.message(class="form-control", placeholder="Dear Doctor, ... ") }}
+
+                <br>
+                {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
+    
+            </form>
+
+            <div class="checkbox mb-3">
+                <h6>Back to search: </h6>
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('docquery') }}">Re-Try Search</a>
+             </div>
+
+
+        </div>
+    </div>
+{% endblock %}
