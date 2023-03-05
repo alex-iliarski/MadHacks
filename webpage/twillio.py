@@ -18,7 +18,7 @@ def message_doc(doctor, message):
         to="+1" + doctor["phone"],
     )
 
-def message_doc(message):
+def contact_us(message):
     client.messages.create(
         body=message,
         from_="+13159037882",

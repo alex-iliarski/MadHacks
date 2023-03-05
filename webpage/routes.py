@@ -5,7 +5,7 @@ from webpage.query import find_doctors, get_doc_by_id
 from webpage.dist import get_lat_long
 from webpage.query import find_doctors, get_doc_by_id, get_all_docs
 from flask_googlemaps import Map, GoogleMaps, icons
-from webpage.twillio import message_doc, message_devs
+from webpage.twillio import message_doc, contact_us
 from random import randint
 
 
@@ -79,7 +79,7 @@ def contact():
                 + form.message.data
             )
 
-            message_devs(message)
+            contact_us(message)
             flash(
                 "Message sucessfully sent to developers, they should be getting back to you shortly!",
                 category="success",
