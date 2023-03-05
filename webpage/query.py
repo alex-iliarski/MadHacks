@@ -1,6 +1,6 @@
 from dotenv import load_dotenv, find_dotenv
 import os
-from dist import distance
+from webpage.dist import distance
 import certifi
 from pymongo import MongoClient
 
@@ -42,5 +42,3 @@ def find_doctors(
             docs.append(doctor)
     return docs
 
-
-print(find_doctors("53792", 50, ["GENERAL_PRACTITIONER"], 1, "", "ENGLISH", "NO_PREFERENCE"))
