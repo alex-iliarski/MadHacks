@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, SelectMultipleField
-from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
+from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Regexp
 
 def clean(str):
     return str.replace('_', ' ').title()
@@ -68,15 +68,15 @@ class QueryForm(FlaskForm):
    
 class TextMessageForm(FlaskForm):
 
-    def validate_phone(self, phone):
-        try:
-            p = phonenumbers.parse(phone.data)
-            if not phonenumbers.is_valid_number(p):
-                raise ValueError()
-        except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
-            raise ValidationError('Invalid phone number')
+    # def validate_phone(self, phone):
+    #     try:
+    #         p = phonenumbers.parse(phone.data)
+    #         if not phonenumbers.is_valid_number(p):
+    #             raise ValueError()
+    #     except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
+    #         raise ValidationError('Invalid phone number')
 
     name = StringField(label='Your Name:', validators=[DataRequired()])
-    phone = StringField(label='Your Phone Number:', validators=[Length(min=10), DataRequired()])
+    phone = StringField(label='Your Phone Number:', validators=[Length(min=10), Regexp("^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$"), DataRequired()])
     message = StringField(label='Message:', validators=[DataRequired()])
     submit = SubmitField(label='Send Message')
