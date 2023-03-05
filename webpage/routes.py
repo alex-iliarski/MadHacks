@@ -4,8 +4,14 @@ from webpage import db
 from webpage.forms import QueryForm, TextMessageForm
 from flask import render_template, flash
 from webpage.forms import QueryForm
+<<<<<<< HEAD
 >>>>>>> a75f75481263fa0609af15eed48dd8854c727993
 from webpage.query import find_doctors, get_doc_by_id
+=======
+from webpage.dist import get_lat_long
+from webpage.query import find_doctors, get_doc_by_id, get_all_docs
+from flask_googlemaps import Map, GoogleMaps, icons
+>>>>>>> 3daee376177774befa67b49c5cb3a9ef3c7c6fc9
 
 
 @app.route('/')
@@ -19,22 +25,23 @@ def home():
         style="height:800px;width:100%;margin:0;",
         markers=make_all_markers()
     )
-    return render_template('home.html', map=map)
+    return render_template("home.html", map=map)
 
-@app.route('/about')
+
+@app.route("/about")
 def about():
-    return render_template('about.html')
+    return render_template("about.html")
 
-@app.route('/contact')
+
+@app.route("/contact")
 def contact():
-    return render_template('contact.html')
+    return render_template("contact.html")
 
 
-@app.route('/docquery', methods=["GET", "POST"])
+@app.route("/docquery", methods=["GET", "POST"])
 def docquery():
     form = QueryForm()
 
-    
     if form.validate_on_submit():
         # # make query and redirect to results page
         query_zipcode = form.zipcode.data
@@ -52,26 +59,33 @@ def docquery():
         if query_gender == None:
             query_gender = ""
 
-        docs = find_doctors(query_zipcode, 
-                            within_miles=query_distance, 
-                            specialization=query_specialization, 
-                            years_of_experience=query_years_experience, 
-                            insurence=query_insurance,
-                            language=query_lang,
-                            gender=query_gender)
+        docs = find_doctors(
+            query_zipcode,
+            within_miles=query_distance,
+            specialization=query_specialization,
+            years_of_experience=query_years_experience,
+            insurence=query_insurance,
+            language=query_lang,
+            gender=query_gender,
+        )
 
         return query_results(docs)
-    
+
     if form.errors != {}:  # If there are errors from the validations
         for err_msg in form.errors.values():
-            flash(f'There was an error with creating a user: {err_msg}', category='danger')
+            flash(
+                f"There was an error with creating a user: {err_msg}", category="danger"
+            )
 
-    return render_template('docquery.html', form=form)
+    return render_template("docquery.html", form=form)
 
-@app.route('/query_results')
+
+@app.route("/query_results")
 def query_results(doctors):
-    return render_template('query_results.html', doctors = doctors)
+    return render_template("query_results.html", doctors=doctors)
 
+
+<<<<<<< HEAD
 @app.route('/doctor/<doctor_id>', methods=['GET', 'POST'])
 def doctor(doctor_id):
     form = TextMessageForm()
@@ -88,3 +102,10 @@ def doctor(doctor_id):
         return redirect(url_for('doctor/'+doctor_id, form=form, doctor=doc))
 
     return render_template('doctor.html', form=form, doctor = doc)
+=======
+@app.route("/doctor/<doctor_id>")
+def doctor(doctor_id):
+    form = TextMessageForm()
+    doc = get_doc_by_id(doctor_id)
+    return render_template("doctor.html", form=form, doctor=doc)
+>>>>>>> 3daee376177774befa67b49c5cb3a9ef3c7c6fc9
