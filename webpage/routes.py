@@ -65,3 +65,9 @@ def docquery():
 @app.route('/query_results')
 def query_results(doctors):
     return render_template('query_results.html', doctors = doctors)
+
+@app.route('/doctor/<doctor_id>')
+def doctor(doctor_id):
+    form = TextMessageForm()
+    doc = get_doc_by_id(doctor_id)
+    return render_template('doctor.html', form=form, doctor = doc)
