@@ -1,6 +1,6 @@
 from dotenv import load_dotenv, find_dotenv
 import os
-from dist import distance
+from webpage.dist import distance
 import certifi
 from pymongo import MongoClient
 
