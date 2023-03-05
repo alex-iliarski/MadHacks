@@ -11,10 +11,10 @@ token = os.environ.get("TWILIO_AUTH_TOKEN")
 client = Client(sid, token)
 
 
-def message_doc(doc_id, message):
-    doctor = get_doc_by_id(doc_id)
+def message_doc(doctor, message):
     client.messages.create(
         body=message,
         from_="+13159037882",
         to="+1" + doctor["phone"],
     )
+

@@ -14,7 +14,6 @@ from wtforms.validators import (
     ValidationError,
     Regexp,
 )
-import re
 
 
 def clean(str):
@@ -55,7 +54,22 @@ class QueryForm(FlaskForm):
         "UROLOGIST",
     ]
 
-    insurances = ["", "ALINA_HEALTH", "ALLIANZ", "ASANATOARE"]
+    insurances = [
+        "",
+        "ALINA_HEALTH",
+        "ALLIANZ",
+        "ASANATOARE",
+        "BLUE_CROSS_BLUE_SHIELD",
+        "CIGNA",
+        "CIGNA",
+        "MEDICARE",
+        "MEDICAID",
+        "MUTUAL_OF_OMAHA",
+        "UNITED_HEALTHCARE",
+        "KAISER_PERMANENTE",
+        "ANTHEM",
+        "HUMANA",
+    ]
     langs = ["", "ENGLISH", "FRENCH", "GERMAN", "ITALIAN", "SPANISH"]
     genders = ["", "NO_PREFERENCE", "MALE", "FEMALE", "NON_BINARY"]
 
@@ -98,21 +112,17 @@ class QueryForm(FlaskForm):
 
 
 class TextMessageForm(FlaskForm):
-    def validate_phone(self, phone):
-        pattern = re.compile(
-            "/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm"
-        )
-        if not pattern.match(phone.data):
-            raise ValidationError("invalid phone number.")
-
-    name = StringField(label="Your Name:", validators=[DataRequired()])
+    name = StringField(label="Your Name:", validators=[DataRequired(), Length(min=3)])
     phone = StringField(
         label="Your Phone Number:",
         validators=[
-            Length(min=10),
+            Length(min=9, max=15),
             DataRequired(),
-            Regexp(r"^\([0-9]{3}\)[0-9]{3}-[0-9]{4}$"),
+            Regexp(
+                r"^(1\s?)?(\d{3}|\(\d{3}\))[\s\-]?\d{3}[\s\-]?\d{4}$",
+                message="That phone number is invalid!",
+            ),
         ],
     )
-    message = StringField(label="Message:", validators=[DataRequired()])
+    message = StringField(label="Message:", validators=[Length(min=20), DataRequired()])
     submit = SubmitField(label="Send Message")

@@ -7,58 +7,84 @@
 {% block page_content %}
     <div class = "text-center">
         <div class="container">
-            <h1>
-                {{ doctor["first_name"] }}
-                {{ doctor["last_name"] }}
-            </h1>
-
-            <!-- format image to be small in top left corner -->
-            <picture>
-                <img class="img-fluid img-thumbnail">
-                    <img class="mb-4" src= "{{ doctor["avatar_url"] }}" > 
+            <div class="row">
+                <div class="col">
+                    <h1 align="right">
+                        {{ doctor["first_name"] }}
+                        {{ doctor["last_name"] }}
+                    </h1>
+                    <!-- format image to be small in top left corner -->
+                    <img class="img-fluid" >
+                        <img class="mb-4" width="250" height="325" align="right" src= "{{ doctor["avatar_url"] }}" > 
+                    </img>
                 </div>
-            </picture>
 
+                <div class="col">
+                    <div class = "text-center">
+                        
+                            <div class = "font-weight-bold " >
+        
+                            
+                            <table class="table table-borderless">
+                            <tbody class="text-white">
+                                <tr>
+                                    <th class="text-right" scope="row">Address: </th>
+                                    <td align="left">
+                                    {{ doctor["address"]["street"] }},
+                                    {{ doctor["address"]["city"] }},
+                                    {{ doctor["address"]["state"] }},
+                                    {{ doctor["address"]["zip"] }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" scope="row">Phone Number: </th>
+                                    <td align="left">{{ doctor["phone"] }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" scope="row">Pronouns: </th>
+                                    <td align="left">{{ doctor["pronouns"][0] }}/{{ doctor["pronouns"][1] }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" scope="row">Specialty: </th>
+                                    <td align="left">{{ doctor["specialty"] }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" scope="row">Insurances Accepted: </th>
+                                    <td align="left">
+                                        {% for ins in doctor["insurance_accepted"] %}
+                                            {{ ins }}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" scope="row">Accepting New Patients: </th>
+                                    <td align="left">
+                                        {% if doctor["available"] %}
+                                            Yes
+                                        {% else %}
+                                            No
+                                        {% endif %}
+                                    </td>
+                                    <tr>
+                                        <th class="text-right" scope="row">Languages: </th>
+                                        <td align="left">
+                                            {% for lang in doctor["languages"] %}
+                                                {{ lang }}
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-right" scope="row">Education: </th>
+                                        <td align="left">{{ doctor["degree"] }} from {{ doctor["college"] }}</td>
+                                    </tr>
+                                </tr>
+                                </tbody>
+                            </table>
+                        
+                        </div>
+                    </div>
 
-            <br>
-            <div >
-                <h6>Address: </h6>
-                {{ doctor["address"]["street"] }},
-                {{ doctor["address"]["city"] }},
-                {{ doctor["address"]["state"] }},
-                {{ doctor["address"]["zip"] }}
-
-                <h6>Phone Number: </h6>
-                {{ doctor["phone"] }}
-                
-                <h6>Pronouns: </h6>
-                {{ doctor["pronouns"][0] }}/{{ doctor["pronouns"][1] }}
-
-                <h6>Specialty: </h6>
-                {{ doctor["specialty"] }}
-                
-                <h6>Insurance: </h6>
-                {{ doctor["insurance"] }}
-                
-                <h6>Accepting New Patients: </h6>
-                {% if doctor["available"] %}
-                    Yes
-                {% else %}
-                    No
-                {% endif %}
-
-                <h6>Rating: </h6>
-                {{ doctor["rating"] }}
-                
-                <h6>Number of Reviews: </h6>
-                {{ doctor["number_of_reviews"] }}
-                
-                <h6>Website: </h6>
-                {{ doctor["website"] }}
-                
-                <h6>Hours: </h6>
-                {{ doctor["hours"] }}
-                
+                </div>
             </div>
 
             <br>
