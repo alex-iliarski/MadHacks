@@ -4,9 +4,23 @@ from webpage import db
 from webpage.forms import QueryForm, TextMessageForm
 from flask import render_template, flash
 from webpage.forms import QueryForm
-from webpage.query import find_doctors, get_doc_by_id
+from webpage.dist import get_lat_long
+from webpage.query import find_doctors, get_doc_by_id, get_all_docs
 from flask_googlemaps import Map, GoogleMaps, icons
 
+def make_all_markers():
+    ret = []
+    all_doctors = get_all_docs()
+    for doctor in all_doctors:
+        loc_dict = get_lat_long(doctor["address"]["street"]+" "+doctor["address"]["city"]+" "+doctor["address"]["state"]+" "+doctor["address"]["zip"])
+        ret.append({
+            'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            'lat': loc_dict["lat"],
+            'lng': loc_dict["lng"],
+            'infobox': f"<p>{doctor['first_name']} {doctor['last_name']}</p>"
+        })
+    return ret
+        
 
 @app.route('/')
 @app.route('/home')
@@ -17,20 +31,7 @@ def home():
         lng=-89.4066381,
         zoom=12,
         style="height:800px;width:100%;margin:0;",
-        markers=[
-          {
-             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-             'lat': 37.4419,
-             'lng': -122.1419,
-             'infobox': "<p>Hello World</p>"
-          },
-          {
-             'icon': 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-             'lat': 37.4300,
-             'lng': -122.1400,
-             'infobox': "<p>Hello World from other place</p>"
-          }
-        ]
+        markers=make_all_markers()
     )
     return render_template('home.html', map=map)
 
