@@ -42,5 +42,5 @@ def find_doctors(
             docs.append(doctor)
     return docs
 
-
-print(find_doctors("53792", 50, ["GENERAL_PRACTITIONER"], 1, "", "ENGLISH", "NO_PREFERENCE"))
+def get_doc_by_id(doc_id):
+    return doctors_collection.find_one({"_id": doc_id})
