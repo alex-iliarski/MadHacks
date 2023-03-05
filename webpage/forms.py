@@ -1,22 +1,35 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, SelectMultipleField
-from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
+from wtforms import (
+    StringField,
+    PasswordField,
+    SubmitField,
+    SelectField,
+    SelectMultipleField,
+)
+from wtforms.validators import (
+    Length,
+    EqualTo,
+    Email,
+    DataRequired,
+    ValidationError,
+    Regexp,
+)
+import re
 
 
 def clean(str):
-    return str.replace('_', ' ').title()
+    return str.replace("_", " ").title()
+
 
 class QueryForm(FlaskForm):
-    
     def validate_zipcode(self, zipcode):
         if len(zipcode.data) != 5:
-            raise ValidationError('Zipcode must be 5 digits long.')
+            raise ValidationError("Zipcode must be 5 digits long.")
         if not zipcode.data.isdigit():
-            raise ValidationError('Zipcode must be numeric.')
-        
+            raise ValidationError("Zipcode must be numeric.")
 
-
-    specializations = ["CARDIOLOGIST",
+    specializations = [
+        "CARDIOLOGIST",
         "DENTIST",
         "DERMATOLOGIST",
         "ENDOCRINOLOGIST",
@@ -39,26 +52,42 @@ class QueryForm(FlaskForm):
         "RADIOLOGIST",
         "RHEUMATOLOGIST",
         "SURGEON",
-        "UROLOGIST"]
-    
+        "UROLOGIST",
+    ]
+
     insurances = ["", "ALINA_HEALTH", "ALLIANZ", "ASANATOARE"]
     langs = ["", "ENGLISH", "FRENCH", "GERMAN", "ITALIAN", "SPANISH"]
     genders = ["", "NO_PREFERENCE", "MALE", "FEMALE", "NON_BINARY"]
-    
-    specializations_choices = [(specialization, clean(specialization)) for specialization in specializations]
+
+    specializations_choices = [
+        (specialization, clean(specialization)) for specialization in specializations
+    ]
     insurances_choices = [(insurance, clean(insurance)) for insurance in insurances]
     langs_choices = [(lang, clean(lang)) for lang in langs]
     genders_choices = [(gender, clean(gender)) for gender in genders]
-    
-    zipcode = StringField(label='Zipcode:', validators=[Length(min=5, max=5), DataRequired()])
-    distance = StringField(label='Within Miles:', validators=[Length(max=3)])
-    specialization = SelectMultipleField(label='Specialization:', choices=specializations_choices, validators=[])
-    years_experience = StringField(label='Minimum Years of Experience:', validators=[Length(max=2)])
-    insurance = SelectField(label='Insurance:', choices=insurances_choices, validators=[])
-    lang = SelectField(label="Preferred Language: ", choices=langs_choices, validators=[])
-    gender = SelectField(label="Preferred Gender: ", choices=genders_choices, validators=[])
-    
-    submit = SubmitField(label='Search For Doctors')
+
+    zipcode = StringField(
+        label="Zipcode:", validators=[Length(min=5, max=5), DataRequired()]
+    )
+    distance = StringField(label="Within Miles:", validators=[Length(max=3)])
+    specialization = SelectMultipleField(
+        label="Specialization:", choices=specializations_choices, validators=[]
+    )
+    years_experience = StringField(
+        label="Minimum Years of Experience:", validators=[Length(max=2)]
+    )
+    insurance = SelectField(
+        label="Insurance:", choices=insurances_choices, validators=[]
+    )
+    lang = SelectField(
+        label="Preferred Language: ", choices=langs_choices, validators=[]
+    )
+    gender = SelectField(
+        label="Preferred Gender: ", choices=genders_choices, validators=[]
+    )
+
+    submit = SubmitField(label="Search For Doctors")
+
 
 # class EmailMessageForm(FlaskForm):
 #     name = StringField(label='Name:', validators=[DataRequired()])
@@ -66,9 +95,24 @@ class QueryForm(FlaskForm):
 #     subject = StringField(label='Subject:', validators=[DataRequired()])
 #     message = StringField(label='Message:', validators=[DataRequired()])
 #     submit = SubmitField(label='Send Message')
-   
+
+
 class TextMessageForm(FlaskForm):
-    name = StringField(label='Your Name:', validators=[DataRequired()])
-    phone = StringField(label='Your Phone Number:', validators=[DataRequired()])
-    message = StringField(label='Message:', validators=[DataRequired()])
-    submit = SubmitField(label='Send Message')
+    def validate_phone(self, phone):
+        pattern = re.compile(
+            "/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm"
+        )
+        if not pattern.match(phone.data):
+            raise ValidationError("invalid phone number.")
+
+    name = StringField(label="Your Name:", validators=[DataRequired()])
+    phone = StringField(
+        label="Your Phone Number:",
+        validators=[
+            Length(min=10),
+            DataRequired(),
+            Regexp(r"^\([0-9]{3}\)[0-9]{3}-[0-9]{4}$"),
+        ],
+    )
+    message = StringField(label="Message:", validators=[DataRequired()])
+    submit = SubmitField(label="Send Message")

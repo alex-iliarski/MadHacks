@@ -5,7 +5,26 @@ from webpage.forms import QueryForm, TextMessageForm
 from flask import render_template, flash
 from webpage.forms import QueryForm
 from webpage.query import find_doctors, get_doc_by_id
+from webpage.dist import get_lat_long
+from webpage.query import find_doctors, get_doc_by_id, get_all_docs
 from flask_googlemaps import Map, GoogleMaps, icons
+from webpage.twillio import message_doc
+from random import randint
+
+def make_all_markers():
+    ret = []
+    all_doctors = get_all_docs()
+    for doctor in all_doctors:
+        plus_or_minus = lambda: 1 if randint(0, 1) == 0 else -1
+        rand_offset = randint(0, 100) / 100000 * plus_or_minus()
+        loc_dict = get_lat_long(doctor["address"]["street"]+" "+doctor["address"]["city"]+" "+doctor["address"]["state"]+" "+doctor["address"]["zip"])
+        ret.append({
+            'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            'lat': loc_dict["lat"]+rand_offset,
+            'lng': loc_dict["lng"]+rand_offset,
+            'infobox': f"<p>{doctor['first_name']} {doctor['last_name']}</p>"
+        })
+    return ret
 
 
 @app.route('/')
@@ -17,38 +36,26 @@ def home():
         lng=-89.4066381,
         zoom=12,
         style="height:800px;width:100%;margin:0;",
-        markers=[
-          {
-             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-             'lat': 37.4419,
-             'lng': -122.1419,
-             'infobox': "<p>Hello World</p>"
-          },
-          {
-             'icon': 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-             'lat': 37.4300,
-             'lng': -122.1400,
-             'infobox': "<p>Hello World from other place</p>"
-          }
-        ]
+        markers=make_all_markers()
     )
-    return render_template('home.html', map=map)
+    return render_template("home.html", map=map)
 
-@app.route('/about')
+
+@app.route("/about")
 def about():
-    return render_template('about.html')
+    return render_template("about.html")
 
-@app.route('/contact')
+
+@app.route("/contact")
 def contact():
     form = TextMessageForm()
     return render_template('contact.html', form=form)
 
 
-@app.route('/docquery', methods=["GET", "POST"])
+@app.route("/docquery", methods=["GET", "POST"])
 def docquery():
     form = QueryForm()
 
-    
     if form.validate_on_submit():
         # # make query and redirect to results page
         query_zipcode = form.zipcode.data
@@ -66,28 +73,45 @@ def docquery():
         if query_gender == None:
             query_gender = ""
 
-        docs = find_doctors(query_zipcode, 
-                            within_miles=query_distance, 
-                            specialization=query_specialization, 
-                            years_of_experience=query_years_experience, 
-                            insurence=query_insurance,
-                            language=query_lang,
-                            gender=query_gender)
+        docs = find_doctors(
+            query_zipcode,
+            within_miles=query_distance,
+            specialization=query_specialization,
+            years_of_experience=query_years_experience,
+            insurence=query_insurance,
+            language=query_lang,
+            gender=query_gender,
+        )
 
         return query_results(docs)
-    
+
     if form.errors != {}:  # If there are errors from the validations
         for err_msg in form.errors.values():
-            flash(f'There was an error with creating a user: {err_msg}', category='danger')
+            flash(
+                f"There was an error with creating a user: {err_msg}", category="danger"
+            )
 
-    return render_template('docquery.html', form=form)
+    return render_template("docquery.html", form=form)
 
-@app.route('/query_results')
+
+@app.route("/query_results")
 def query_results(doctors):
-    return render_template('query_results.html', doctors = doctors)
+    return render_template("query_results.html", doctors=doctors)
 
-@app.route('/doctor/<doctor_id>')
+
+@app.route('/doctor/<doctor_id>', methods=['GET', 'POST'])
 def doctor(doctor_id):
     form = TextMessageForm()
     doc = get_doc_by_id(doctor_id)
+
+    if form.validate_on_submit():
+        phone_number = form.phone.data
+        name = form.name.data
+        message = "Message from " + name + "at " + phone_number + ": " + form.message.data
+
+        message_doc(doctor_id, message)
+
+        flash(f'Message sent to doctor', category='success')
+        return redirect(url_for('doctor/'+doctor_id, form=form, doctor=doc))
+
     return render_template('doctor.html', form=form, doctor = doc)

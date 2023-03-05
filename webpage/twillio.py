@@ -1,5 +1,5 @@
 from twilio.rest import Client
-from query import get_doc_by_id
+from webpage.query import get_doc_by_id
 from dotenv import load_dotenv, find_dotenv
 import os
 

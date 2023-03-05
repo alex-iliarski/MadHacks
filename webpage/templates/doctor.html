@@ -28,60 +28,68 @@
                 {{ doctor["address"]["state"] }},
                 {{ doctor["address"]["zip"] }}
 
-                <h6>Phone Number</h6>
+                <h6>Phone Number: </h6>
                 {{ doctor["phone"] }}
                 
-                <h6>Pronouns</h6>
-                {{ doctor["pronouns"] }}
+                <h6>Pronouns: </h6>
+                {{ doctor["pronouns"][0] }}/{{ doctor["pronouns"][1] }}
 
-                <h6>Specialty</h6>
+                <h6>Specialty: </h6>
                 {{ doctor["specialty"] }}
                 
-                <h6>Insurance</h6>
+                <h6>Insurance: </h6>
                 {{ doctor["insurance"] }}
                 
-                <h6>Accepting New Patients</h6>
-                {{ doctor["available"] }}
-                
-                <h6>Rating</h6>
+                <h6>Accepting New Patients: </h6>
+                {% if doctor["available"] %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+
+                <h6>Rating: </h6>
                 {{ doctor["rating"] }}
                 
-                <h6>Number of Reviews</h6>
+                <h6>Number of Reviews: </h6>
                 {{ doctor["number_of_reviews"] }}
                 
-                <h6>Website</h6>
+                <h6>Website: </h6>
                 {{ doctor["website"] }}
                 
-                <h6>Hours</h6>
+                <h6>Hours: </h6>
                 {{ doctor["hours"] }}
                 
             </div>
 
             <br>
-        
-            <form method="POST" style="color:white">
-                {{ form.hidden_tag() }}
+            
+            <div class = "text-center">
+                <div class="container">
+                    <form method="POST" style="color:white">
+                        {{ form.hidden_tag() }}
 
-                <h1 class="h3 mb-3 font-weight-normal">
-                    Send a text message to {{ doctor["first_name"] }} {{ doctor["last_name"] }} to schedule an appointment:
-                </h1>
-                <br>
-                {{ form.name.label() }}
-                {{ form.name(class="form-control", placeholder="Your Name") }}
-    
+                        <h1 class="h3 mb-3 font-weight-normal">
+                            Send a text message to {{ doctor["first_name"] }} {{ doctor["last_name"] }} to schedule an appointment:
+                        </h1>
+                        <br>
+                        {{ form.name.label() }}
+                        {{ form.name(class="form-control", placeholder="Your Name") }}
+            
 
-                <br>
-                {{ form.phone.label() }}
-                {{ form.phone(class="form-control", placeholder="Your Phone Number") }}
+                        <br>
+                        {{ form.phone.label() }}
+                        {{ form.phone(class="form-control", placeholder="Your Phone Number") }}
 
-                <br>
-                {{ form.message.label() }}
-                {{ form.message(class="form-control", placeholder="Dear Doctor, ... ") }}
+                        <br>
+                        {{ form.message.label() }}
+                        {{ form.message(class="form-control", placeholder="Dear Doctor, ... ") }}
 
-                <br>
-                {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
-    
-            </form>
+                        <br>
+                        {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
+            
+                    </form>
+                </div>
+            </div>
             
             <br>
             <br>
