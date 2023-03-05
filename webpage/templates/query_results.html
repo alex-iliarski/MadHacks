@@ -9,9 +9,13 @@
         <div class="container">
             <h1>Results of Your Search!</h1>
 
-            {% for doc in doctors %}
-                {{ doc.name }}
-            {% endfor %}
+            <br>
+
+            <div>
+                {% for doc in doctors %}
+                    {{ doc.name }}
+                {% endfor %}
+            </div>
 
 
             <br>
