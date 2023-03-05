@@ -5,38 +5,61 @@
 {% endblock %}
 
 {% block page_content %}
-    <div class = "text-center">
+    <div class="text-center">
         <div class="container">
             <h1>Search for a Doctor to your Preferences!</h1>
             <form method="POST" style="color:white">
                 {{ form.hidden_tag() }}
                 <!-- can add logo here if wanted -->
                 <img class="mb-4" src="" alt="">
-                <br>
-                {{ form.zipcode(class="form-control", placeholder="Zipcode") }}
-                <br>
-                <br>
-                {{ form.distance(class="form-control", placeholder="Distance") }}
-                <br>
-                <br>
-                {{ form.specialization(class="form-control", placeholder="Specialization") }}
-                <br>
-                <br>
-                {{ form.years_experience(class="form-control", placeholder="Years of experience") }}
-                <br>
-                {{ form.insurance.label() }}
-                <br>
-                {{ form.insurance(class="form-control", placeholder="Preferred insurance") }}
-                <br>
-                {{ form.lang.label() }}
-                <br>
-                {{ form.lang(class="form-control", placeholder="Language") }}
-                <br>
-                {{ form.gender.label() }}
-                <br>
-                {{ form.gender(class="form-control", placeholder="Gender") }}
-                <br>
-                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="{{ form.zipcode.id }}" class="col-sm-5 col-form-label"><h6>Your Zipcode:</h6></label>
+                            <div class="col-sm-7">
+                                {{ form.zipcode(class="form-control") }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="{{ form.distance.id }}" class="col-sm-5 col-form-label"><h6>Max Distance:</h6></label>
+                            <div class="col-sm-7">
+                                {{ form.distance(class="form-control") }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="{{ form.specialization.id }}" class="col-sm-5 col-form-label"><h6>Doctor Specialization:</h6></label>
+                            <div class="col-sm-7">
+                                {{ form.specialization(class="form-control") }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="{{ form.years_experience.id }}" class="col-sm-5 col-form-label"><h6>Years of experience:</h6></label>
+                            <div class="col-sm-7">
+                                {{ form.years_experience(class="form-control") }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="{{ form.insurance.id }}" class="col-sm-5 col-form-label"><h6>Insurance Provider:</h6></label>
+                            <div class="col-sm-7">
+                                {{ form.insurance(class="form-control") }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="{{ form.lang.id }}" class="col-sm-5 col-form-label"><h6>Preferred Language:</h6></label>
+                            <div class="col-sm-7">
+                                {{ form.lang(class="form-control") }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="{{ form.gender.id }}" class="col-sm-5 col-form-label"><h6>Preferred Gender:</h6></label>
+                            <div class="col-sm-7">
+                                {{ form.gender(class="form-control") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
             </form>
         </div>
