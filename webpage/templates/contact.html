@@ -9,6 +9,17 @@
         <div class="Center">
             <h1>Contact Us</h1>
             <p>Have any questions or concerns? Please submit a ticket here.</p>
+            <br>
+            {{ form.name(class="form-control", placeholder="name") }}
+            <br>
+            <br>
+            {{ form.email(class="form-control", placeholder="email") }}
+            <br>
+            <br>
+            {{ form.subject(class="form-control", placeholder="subject") }}
+            <br>
+            <br>
+            {{ form.message(class="form-control", placeholder="message") }}
         </div>
     </div>
 {% endblock %}
