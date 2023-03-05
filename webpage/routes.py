@@ -1,6 +1,12 @@
 from webpage import app
+<<<<<<< HEAD
+from flask import render_template, redirect, url_for, flash
+from webpage import db
+from webpage.forms import QueryForm, TextMessageForm
+=======
 from flask import render_template, flash
 from webpage.forms import QueryForm
+>>>>>>> a75f75481263fa0609af15eed48dd8854c727993
 from webpage.query import find_doctors, get_doc_by_id
 
 
@@ -60,7 +66,8 @@ def docquery():
 def query_results(doctors):
     return render_template('query_results.html', doctors = doctors)
 
-@app.route('/doctor/<int:doctor_id>')
+@app.route('/doctor/<doctor_id>')
 def doctor(doctor_id):
+    form = TextMessageForm()
     doc = get_doc_by_id(doctor_id)
-    return render_template('doctor.html', doctor = doc)
+    return render_template('doctor.html', form=form, doctor = doc)
