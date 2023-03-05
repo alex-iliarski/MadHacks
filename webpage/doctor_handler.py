@@ -34,5 +34,5 @@ Insurence = Enum("Insurence", ["ALINA_HEALTH", "ALLIANZ", "ASANATOARE"])
 
 Language = Enum("Language", ["ENGLISH", "FRENCH", "GERMAN", "ITALIAN", "SPANISH"])
 
-Gender = Enum("Gender", ["MALE", "FEMALE"])
+Gender = Enum("Gender", ["NO_PREFERENCE", "MALE", "FEMALE", "OTHER"])
 

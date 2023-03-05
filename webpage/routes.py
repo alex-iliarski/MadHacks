@@ -53,7 +53,7 @@ def docquery():
         
         print(docs)
 
-        return render_template(url_for('home'))
+        return home()
         # return redirect(url_for('query_results', doctors = docs))
     
     if form.errors != {}: #If there are not errors from the validations
