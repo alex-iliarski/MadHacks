@@ -48,7 +48,8 @@ def about():
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    form = TextMessageForm()
+    return render_template('contact.html', form=form)
 
 
 @app.route("/docquery", methods=["GET", "POST"])
@@ -58,9 +59,9 @@ def docquery():
     if form.validate_on_submit():
         # # make query and redirect to results page
         query_zipcode = form.zipcode.data
-        query_distance = int(form.distance.data)
+        query_distance = form.distance.data
         query_specialization = form.specialization.data
-        query_years_experience = int(form.years_experience.data)
+        query_years_experience = form.years_experience.data
         query_insurance = form.insurance.data
         query_lang = form.lang.data
         query_gender = form.gender.data
@@ -71,6 +72,17 @@ def docquery():
             query_lang = ""
         if query_gender == None:
             query_gender = ""
+
+        if query_distance == "":
+            query_distance = 50
+        else:
+            query_distance = int(query_distance)
+
+        if query_years_experience == "":
+            query_years_experience = 0
+        else:
+            query_years_experience = int(query_years_experience)
+        
 
         docs = find_doctors(
             query_zipcode,
@@ -106,9 +118,9 @@ def doctor(doctor_id):
     if form.validate_on_submit():
         phone_number = form.phone.data
         name = form.name.data
-        message = "Message from " + name + "at " + phone_number + ": " + form.message.data
-
-        message_doc(doctor_id, message)
+        message = "Message from " + name + " at " + phone_number + ": " + form.message.data
+        print('asdfasjdhkj')
+        message_doc(doc, message)
 
         flash(f'Message sent to doctor', category='success')
         return redirect(url_for('doctor/'+doctor_id, form=form, doctor=doc))
