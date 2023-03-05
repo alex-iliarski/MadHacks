@@ -18,6 +18,3 @@ def message_doc(doc_id, message):
         from_="+13159037882",
         to="+1" + doctor["phone"],
     )
-
-
-message_doc("6403ce94cfc8fce87221aab2", "Hello, this is a test message")
