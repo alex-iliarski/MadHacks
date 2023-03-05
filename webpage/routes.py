@@ -1,7 +1,6 @@
 from webpage import app
 from flask import render_template, redirect, url_for, flash
 from webpage import db
-# from flask_login import login_user, logout_user, login_required
 from webpage.forms import QueryForm
 from webpage.query import find_doctors
 
