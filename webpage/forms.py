@@ -6,7 +6,7 @@ from wtforms import (
     SelectField,
     SelectMultipleField,
 )
-from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
+from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError, Regexp
 import re
 
 
@@ -100,7 +100,7 @@ class TextMessageForm(FlaskForm):
 
     name = StringField(label="Your Name:", validators=[DataRequired()])
     phone = StringField(
-        label="Your Phone Number:", validators=[Length(min=10), DataRequired()]
+        label="Your Phone Number:", validators=[Length(min=10), DataRequired(), Regexp(r'/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm')]
     )
     message = StringField(label="Message:", validators=[DataRequired()])
     submit = SubmitField(label="Send Message")
