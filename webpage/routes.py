@@ -35,6 +35,14 @@ def docquery():
         query_lang = form.lang.data
         query_gender = form.gender.data
 
+        if query_insurance == None:
+            query_insurance = ""
+        if query_lang == None:
+            query_lang = ""
+        if query_gender == None:
+            query_gender = ""
+
+
         docs = find_doctors(query_zipcode, 
                             within_miles=query_distance, 
                             specialization=query_specialization, 
