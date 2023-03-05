@@ -5,7 +5,7 @@ from webpage.query import find_doctors, get_doc_by_id
 from webpage.dist import get_lat_long
 from webpage.query import find_doctors, get_doc_by_id, get_all_docs
 from flask_googlemaps import Map, GoogleMaps, icons
-from webpage.twillio import message_doc
+from webpage.twillio import message_doc, message_devs
 from random import randint
 
 
@@ -66,7 +66,33 @@ def about():
 @app.route("/contact")
 def contact():
     form = TextMessageForm()
-    return render_template("contact.html", form=form)
+    if request.method == "POST":
+        if form.validate_on_submit():
+            phone_number = form.phone.data
+            name = form.name.data
+            message = (
+                "Message from "
+                + name
+                + " at "
+                + phone_number
+                + ": "
+                + form.message.data
+            )
+
+            message_devs(message)
+            flash(
+                "Message sucessfully sent to developers, they should be getting back to you shortly!",
+                category="success",
+            )
+            return redirect(url_for("contact"))
+        flash(
+            "Message not sent, There was an error in your phone number",
+            category="danger",
+        )
+        return redirect(url_for("contact"))
+
+    else:
+        return render_template("contact.html", form=form)
 
 
 @app.route("/docquery", methods=["GET", "POST"])
