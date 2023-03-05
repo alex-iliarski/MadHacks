@@ -20,8 +20,24 @@ def make_all_markers():
             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
             'lat': loc_dict["lat"]+rand_offset,
             'lng': loc_dict["lng"]+rand_offset,
-            'infobox': f"""<b style=\"color:black; float:left;\">{doctor['first_name']} {doctor['last_name']}</b> 
-            <img src=\"{doctor['avatar_url']}\" style=\"float:left;\"> 
+            'infobox': f"""<b style=\"color:black; float:left;\">{doctor['first_name']} {doctor['last_name']}</b> <br>
+            <img src=\"{doctor['avatar_url']}\" style=\"float:left;\"> <br>
+            <a href="{url_for('doctor', doctor_id=doctor["_id"])}" style=\"float:left;\">More Info</a>"""
+        })
+    return ret
+
+def make_specific_markers(doctors):
+    ret = []
+    for doctor in doctors:
+        plus_or_minus = lambda: 1 if randint(0, 1) == 0 else -1
+        rand_offset = randint(0, 100) / 100000 * plus_or_minus()
+        loc_dict = get_lat_long(doctor["address"]["street"]+" "+doctor["address"]["city"]+" "+doctor["address"]["state"]+" "+doctor["address"]["zip"])
+        ret.append({
+            'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            'lat': loc_dict["lat"]+rand_offset,
+            'lng': loc_dict["lng"]+rand_offset,
+            'infobox': f"""<b style=\"color:black; float:left;\">{doctor['first_name']} {doctor['last_name']}</b> <br>
+            <img src=\"{doctor['avatar_url']}\" style=\"float:left;\"> <br>
             <a href="{url_for('doctor', doctor_id=doctor["_id"])}" style=\"float:left;\">More Info</a>"""
         })
     return ret
@@ -107,7 +123,16 @@ def docquery():
 
 @app.route("/query_results")
 def query_results(doctors):
-    return render_template("query_results.html", doctors=doctors)
+    map = Map(
+        identifier="map",
+        lat=43.0666775,
+        lng=-89.4066381,
+        zoom=12,
+        style="height:800px;width:100%;margin:0;",
+        center_on_user_location=True,
+        markers=make_specific_markers(doctors)
+    )
+    return render_template("query_results.html", doctors=doctors, map=map)
 
 
 @app.route("/doctor/<doctor_id>", methods=["GET", "POST"])

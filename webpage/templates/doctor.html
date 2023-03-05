@@ -46,13 +46,13 @@
                                 </tr>
                                 <tr>
                                     <th class="text-right" scope="row">Specialty: </th>
-                                    <td align="left">{{ doctor["specialty"] }}</td>
+                                    <td align="left">{{ doctor["specialty"].title() }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-right" scope="row">Insurances Accepted: </th>
                                     <td align="left">
                                         {% for ins in doctor["insurance_accepted"] %}
-                                            {{ ins }}
+                                            {{ ins.title() }}
                                         {% endfor %}
                                     </td>
                                 </tr>
@@ -69,7 +69,7 @@
                                         <th class="text-right" scope="row">Languages: </th>
                                         <td align="left">
                                             {% for lang in doctor["languages"] %}
-                                                {{ lang }}
+                                                {{ lang.title() }}
                                             {% endfor %}
                                         </td>
                                     </tr>
