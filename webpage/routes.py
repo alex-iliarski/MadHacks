@@ -1,6 +1,5 @@
 from webpage import app
-from flask import render_template, redirect, url_for, flash
-from webpage import db
+from flask import render_template, flash
 from webpage.forms import QueryForm
 from webpage.query import find_doctors, get_doc_by_id
 
