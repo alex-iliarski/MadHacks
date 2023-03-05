@@ -59,9 +59,9 @@ def docquery():
     if form.validate_on_submit():
         # # make query and redirect to results page
         query_zipcode = form.zipcode.data
-        query_distance = int(form.distance.data)
+        query_distance = form.distance.data
         query_specialization = form.specialization.data
-        query_years_experience = int(form.years_experience.data)
+        query_years_experience = form.years_experience.data
         query_insurance = form.insurance.data
         query_lang = form.lang.data
         query_gender = form.gender.data
@@ -72,6 +72,17 @@ def docquery():
             query_lang = ""
         if query_gender == None:
             query_gender = ""
+
+        if query_distance == "":
+            query_distance = 50
+        else:
+            query_distance = int(query_distance)
+
+        if query_years_experience == "":
+            query_years_experience = 0
+        else:
+            query_years_experience = int(query_years_experience)
+        
 
         docs = find_doctors(
             query_zipcode,
