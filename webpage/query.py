@@ -1,7 +1,6 @@
 from dotenv import load_dotenv, find_dotenv
 import os
 from webpage.dist import distance
-import pprint
 import certifi
 from pymongo import MongoClient
 
@@ -42,9 +41,3 @@ def find_doctors(
         if distance(zip_code, doctor["address"]["zip"]) <= within_miles:
             docs.append(doctor)
     return docs
-
-
-# printer = pprint.PrettyPrinter(indent=4)
-
-# for doctor in find_doctors("53792", within_miles=10):
-#     printer.pprint(doctor)
