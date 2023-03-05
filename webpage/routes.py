@@ -35,14 +35,6 @@ def docquery():
         query_lang = form.lang.data
         query_gender = form.gender.data
 
-        print(query_zipcode)
-        print(query_distance)
-        print(query_specialization)
-        print(query_years_experience)
-        print(query_insurance)
-        print(query_lang)
-        print(query_gender)
-
         docs = find_doctors(query_zipcode, 
                             within_miles=query_distance, 
                             specialization=query_specialization, 
@@ -50,14 +42,15 @@ def docquery():
                             insurence=query_insurance,
                             language=query_lang,
                             gender=query_gender)
-        
-        print(docs)
 
-        return render_template(url_for('home'))
-        # return redirect(url_for('query_results', doctors = docs))
+        return query_results(docs)
     
-    if form.errors != {}: #If there are not errors from the validations
+    if form.errors != {}:  # If there are errors from the validations
         for err_msg in form.errors.values():
             flash(f'There was an error with creating a user: {err_msg}', category='danger')
 
     return render_template('docquery.html', form=form)
+
+@app.route('/query_results')
+def query_results(doctors):
+    return render_template('query_results.html', doctors = doctors)

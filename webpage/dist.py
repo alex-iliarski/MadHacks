@@ -18,12 +18,3 @@ def distance(origin, destination):
         return 1
     return round(float(dist[:-3].replace(",", "")))
 
-
-print(distance("seattle", "washington dc"))
-print(distance("53792", "53792"))
-print(
-    distance(
-        "Venture, 619 N Segoe Rd, Madison, WI 53705",
-        "SpringHill Suites by Marriott Madison, 4601 Frey St, Madison, WI 53705",
-    )
-)

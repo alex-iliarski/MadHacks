@@ -2,6 +2,10 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, SelectMultipleField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
 
+
+def clean(str):
+    return str.replace('_', ' ').title()
+
 class QueryForm(FlaskForm):
     
     def validate_zipcode(self, zipcode):
@@ -9,14 +13,50 @@ class QueryForm(FlaskForm):
             raise ValidationError('Zipcode must be 5 digits long.')
         if not zipcode.data.isdigit():
             raise ValidationError('Zipcode must be numeric.')
+        
+    
+
+    specializations = ["CARDIOLOGIST",
+        "DENTIST",
+        "DERMATOLOGIST",
+        "ENDOCRINOLOGIST",
+        "GASTROENTEROLOGIST",
+        "GENERAL_PRACTITIONER",
+        "GYNECOLOGIST",
+        "HEMATOLOGIST",
+        "INFECTIOUS_DISEASES_SPECIALIST",
+        "NEPHROLOGIST",
+        "NEUROLOGIST",
+        "NEUROSURGEON",
+        "OBSTETRICIAN",
+        "ONCOLOGIST",
+        "OPHTHALMOLOGIST",
+        "ORTHOPEDIST",
+        "OTORHINOLARYNGOLOGIST",
+        "PEDIATRICIAN",
+        "PHYSIATRIST",
+        "PSYCHIATRIST",
+        "RADIOLOGIST",
+        "RHEUMATOLOGIST",
+        "SURGEON",
+        "UROLOGIST"]
+    
+    insurances = ["ALINA_HEALTH", "ALLIANZ", "ASANATOARE"]
+    langs = ["ENGLISH", "FRENCH", "GERMAN", "ITALIAN", "SPANISH"]
+    genders = ["NO_PREFERENCE", "MALE", "FEMALE", "NON_BINARY"]
+    
+    specializations_choices = [(specialization, clean(specialization)) for specialization in specializations]
+    insurances_choices = [(insurance, clean(insurance)) for insurance in insurances]
+    langs_choices = [(lang, clean(lang)) for lang in langs]
+    genders_choices = [(gender, clean(gender)) for gender in genders]
     
     zipcode = StringField(label='Zipcode:', validators=[Length(min=5, max=5), DataRequired()])
     distance = StringField(label='Within Miles:', validators=[Length(max=3)])
-    specialization = SelectMultipleField(label='Specialization:', choices=[('general_practitioner', 'General Practitioner'), ('obgyn', 'OBGYN'), ('neurosugeon', 'Neurosurgeon')], validators=[])
+    specialization = SelectMultipleField(label='Specialization:', choices=specializations_choices, validators=[])
     years_experience = StringField(label='Minimum Years of Experience:', validators=[Length(max=2)])
-    insurance = SelectMultipleField(label='Insurance:', choices=[('aetna', 'Aetna'), ('alina', 'Alina Health'), ('blue_cross', 'Blue Cross'), ('cigna', 'Cigna'), ('humana', 'Humana'), ('medicare', 'Medicare'), ('medicaid', 'Medicaid'), ('united_healthcare', 'United Healthcare')], validators=[])
-    lang = SelectField(label="Preferred Language: ", choices=[('english', 'English'), ('spanish', 'Spanish'), ('chinese', 'Mandarin Chinese'), ('russian', 'Russian')], validators=[])
-    gender = SelectMultipleField(label="Preferred Gender: ", choices=[('nopreference', 'No Preference'), ('male', 'Male'), ('female', 'Female'), ('other', 'Other')], validators=[])
+    insurance = SelectMultipleField(label='Insurance:', choices=insurances_choices, validators=[])
+    lang = SelectField(label="Preferred Language: ", choices=langs_choices, validators=[])
+    gender = SelectMultipleField(label="Preferred Gender: ", choices=genders_choices, validators=[])
     
     submit = SubmitField(label='Search For Doctors')
 
