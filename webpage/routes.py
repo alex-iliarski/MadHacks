@@ -136,7 +136,7 @@ def docquery():
             gender=query_gender,
         )
 
-        return query_results(docs)
+        return query_results(docs, query_zipcode)
 
     if form.errors != {}:  # If there are errors from the validations
         for err_msg in form.errors.values():
@@ -148,14 +148,14 @@ def docquery():
 
 
 @app.route("/query_results")
-def query_results(doctors):
+def query_results(doctors, query_zipcode):
+    lat_long = get_lat_long(query_zipcode)
     map = Map(
-        identifier="map",
-        lat=43.0666775,
-        lng=-89.4066381,
+        identifier="query_map",
+        lat=lat_long["lat"],
+        lng=lat_long["lng"],
         zoom=12,
         style="height:800px;width:100%;margin:0;",
-        center_on_user_location=True,
         markers=make_specific_markers(doctors)
     )
     return render_template("query_results.html", doctors=doctors, map=map)
