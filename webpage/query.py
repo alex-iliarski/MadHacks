@@ -42,3 +42,5 @@ def find_doctors(
             docs.append(doctor)
     return docs
 
+def get_doc_by_id(doc_id):
+    return doctors_collection.find_one({"_id": doc_id})
