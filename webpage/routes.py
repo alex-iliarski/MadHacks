@@ -188,7 +188,7 @@ def doctor(doctor_id):
 
             message_doc(doc, message)
             flash(
-                "Message sucessfully sent to doctor, they should be getting back to you shorlty!",
+                "Message sucessfully sent to the doctor, they should be getting back to you shortly!",
                 category="success",
             )
             return redirect(url_for("doctor", doctor_id=doctor_id))
