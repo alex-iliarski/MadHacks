@@ -14,28 +14,24 @@
     </title>
 </head>
 <body>
+<ul class="nav justify-content-center">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ url_for('home') }}"> WEBSITE NAME </a>
+        <a class="navbar-brand" href="{{ url_for('home') }}"> What's up Doc </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    <a class="nav-link" href="{{ url_for('docquery') }}">Find a Doctor</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('about') }}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('docquery') }}">Doctor Search</a>
+                    <a class="nav-link" href="{{ url_for('about') }}">About us</a>
                 </li>
             </ul>
-
+        </div>
     </nav>
+</ul>
 
 
 
@@ -46,10 +42,21 @@
 </body>
 <style>
     .navbar {
+        font-family: "Proxima Nova";
+        font-size: 20px;
+        font-weight: 700;
+        font-style: normal;
         margin-bottom: 20px;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
     }
     body {
-        background-color: #36454F;
+        background-color: rgb(30, 30, 30);
         color: white;
     }
 </style>
