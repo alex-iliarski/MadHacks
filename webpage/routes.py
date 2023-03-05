@@ -22,7 +22,9 @@ def make_all_markers():
             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
             'lat': loc_dict["lat"]+rand_offset,
             'lng': loc_dict["lng"]+rand_offset,
-            'infobox': f"<p>{doctor['first_name']} {doctor['last_name']}</p>"
+            'infobox': f"""<b style=\"color:black; float:left;\">{doctor['first_name']} {doctor['last_name']}</b> 
+            <img src=\"{doctor['avatar_url']}\" style=\"float:left;\"> 
+            <a href="{url_for('doctor', doctor_id=doctor["_id"])}" style=\"float:left;\">More Info</a>"""
         })
     return ret
 
@@ -36,6 +38,7 @@ def home():
         lng=-89.4066381,
         zoom=12,
         style="height:800px;width:100%;margin:0;",
+        center_on_user_location=True,
         markers=make_all_markers()
     )
     return render_template("home.html", map=map)
