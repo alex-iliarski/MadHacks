@@ -1,19 +1,38 @@
 from webpage import app
-<<<<<<< HEAD
 from flask import render_template, redirect, url_for, flash
 from webpage import db
 from webpage.forms import QueryForm, TextMessageForm
-=======
 from flask import render_template, flash
 from webpage.forms import QueryForm
->>>>>>> a75f75481263fa0609af15eed48dd8854c727993
 from webpage.query import find_doctors, get_doc_by_id
+from flask_googlemaps import Map, GoogleMaps, icons
 
 
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    map = Map(
+        identifier="map",
+        lat=43.0666775,
+        lng=-89.4066381,
+        zoom=12,
+        style="height:800px;width:100%;margin:0;",
+        markers=[
+          {
+             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+             'lat': 37.4419,
+             'lng': -122.1419,
+             'infobox': "<p>Hello World</p>"
+          },
+          {
+             'icon': 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+             'lat': 37.4300,
+             'lng': -122.1400,
+             'infobox': "<p>Hello World from other place</p>"
+          }
+        ]
+    )
+    return render_template('home.html', map=map)
 
 @app.route('/about')
 def about():
