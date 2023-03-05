@@ -54,9 +54,9 @@ class QueryForm(FlaskForm):
     distance = StringField(label='Within Miles:', validators=[Length(max=3)])
     specialization = SelectMultipleField(label='Specialization:', choices=specializations_choices, validators=[])
     years_experience = StringField(label='Minimum Years of Experience:', validators=[Length(max=2)])
-    insurance = SelectMultipleField(label='Insurance:', choices=insurances_choices, validators=[])
+    insurance = SelectField(label='Insurance:', choices=insurances_choices, validators=[])
     lang = SelectField(label="Preferred Language: ", choices=langs_choices, validators=[])
-    gender = SelectMultipleField(label="Preferred Gender: ", choices=genders_choices, validators=[])
+    gender = SelectField(label="Preferred Gender: ", choices=genders_choices, validators=[])
     
     submit = SubmitField(label='Search For Doctors')
 

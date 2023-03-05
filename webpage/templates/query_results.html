@@ -9,9 +9,16 @@
         <div class="container">
             <h1>Results of Your Search!</h1>
 
-            {% for doc in doctors %}
-                {{ doc.name }}
-            {% endfor %}
+            <br>
+            Map should go here...
+            <br>
+            <div >
+                {% for doc in doctors %}
+                    {{ doc["first_name"] }}
+                    {{ doc["last_name"] }}
+                    <br>
+                {% endfor %}
+            </div>
 
 
             <br>
