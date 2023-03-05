@@ -1,6 +1,6 @@
 from dotenv import load_dotenv, find_dotenv
 import os
-from dist import distance
+from webpage.dist import distance
 from bson import ObjectId
 import certifi
 from pymongo import MongoClient
@@ -45,7 +45,7 @@ def find_doctors(
 
 
 def get_doc_by_id(doc_id):
-    ret =  doctors_collection.find_one({"_id": ObjectId(doc_id)})
+    ret = doctors_collection.find_one({"_id": ObjectId(doc_id)})
     if ret == None:
         raise Exception("No doctor with that id")
     return ret

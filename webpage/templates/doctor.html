@@ -12,35 +12,49 @@
                 {{ doctor["last_name"] }}
             </h1>
 
+            <!-- format image to be small in top left corner -->
+            <picture>
+                <img class="img-fluid img-thumbnail">
+                    <img class="mb-4" src= "{{ doctor["avatar_url"] }}" > 
+                </div>
+            </picture>
+
+
             <br>
             <div >
-                <h6>Address</h6>
-                {{ doctor["address"] }}
-                <br>
+                <h6>Address: </h6>
+                {{ doctor["address"]["street"] }},
+                {{ doctor["address"]["city"] }},
+                {{ doctor["address"]["state"] }},
+                {{ doctor["address"]["zip"] }}
+
                 <h6>Phone Number</h6>
-                {{ doctor["phone_number"] }}
-                <br>
+                {{ doctor["phone"] }}
+                
+                <h6>Pronouns</h6>
+                {{ doctor["pronouns"] }}
+
                 <h6>Specialty</h6>
                 {{ doctor["specialty"] }}
-                <br>
+                
                 <h6>Insurance</h6>
                 {{ doctor["insurance"] }}
-                <br>
+                
                 <h6>Accepting New Patients</h6>
-                {{ doctor["accepting_new_patients"] }}
-                <br>
+                {{ doctor["available"] }}
+                
                 <h6>Rating</h6>
                 {{ doctor["rating"] }}
-                <br>
+                
                 <h6>Number of Reviews</h6>
                 {{ doctor["number_of_reviews"] }}
-                <br>
+                
                 <h6>Website</h6>
                 {{ doctor["website"] }}
-                <br>
+                
                 <h6>Hours</h6>
                 {{ doctor["hours"] }}
-                <br>
+                
             </div>
 
             <br>
@@ -48,11 +62,8 @@
             <form method="POST" style="color:white">
                 {{ form.hidden_tag() }}
 
-                <!-- can add picture of doctor here if wanted -->
-                <img class="mb-4" src="" alt=""> 
-
                 <h1 class="h3 mb-3 font-weight-normal">
-                    Send a message to {{ doctor["first_name"] }} {{ doctor["last_name"] }} to schedule an appointment:
+                    Send a text message to {{ doctor["first_name"] }} {{ doctor["last_name"] }} to schedule an appointment:
                 </h1>
                 <br>
                 {{ form.name.label() }}
@@ -60,12 +71,8 @@
     
 
                 <br>
-                {{ form.email.label() }}
-                {{ form.email(class="form-control", placeholder="Your Email Address") }}
-
-                <br>
-                {{ form.subject.label() }}
-                {{ form.subject(class="form-control", placeholder="Subject of Message") }}
+                {{ form.phone.label() }}
+                {{ form.phone(class="form-control", placeholder="Your Phone Number") }}
 
                 <br>
                 {{ form.message.label() }}
@@ -75,7 +82,9 @@
                 {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
     
             </form>
-
+            
+            <br>
+            <br>
             <div class="checkbox mb-3">
                 <h6>Back to search: </h6>
                 <a class="btn btn-sm btn-secondary" href="{{ url_for('docquery') }}">Re-Try Search</a>
