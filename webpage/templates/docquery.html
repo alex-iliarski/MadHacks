@@ -16,16 +16,36 @@
                 <img class="mb-4" src="" alt=""> 
 
                 <h1 class="h3 mb-3 font-weight-normal">
-                    Please Enter your Preferences
+                    Please Enter your Preferences:
                 </h1>
                 <br>
                 {{ form.zipcode.label() }}
                 {{ form.zipcode(class="form-control", placeholder="zipcode") }}
     
-                {{ form.specialization.label() }}
-                {{ form.zipcode(class="form-control", placeholder="specialization") }}
-    
+
                 <br>
+                {{ form.distance.label() }}
+                {{ form.distance(class="form-control", placeholder="distance") }}
+
+                <br>
+                {{ form.specialization.label() }}
+                {{ form.specialization(class="form-control", placeholder="specialization") }}
+
+              
+                <br>
+                {{ form.insurance.label() }}
+                {{ form.insurance(class="form-control", placeholder="insurance") }}
+
+                <br>
+                {{ form.lang.label() }}
+                {{ form.lang(class="form-control", placeholder="language") }}
+
+                <br>
+                {{ form.gender.label() }}
+                {{ form.gender(class="form-control", placeholder="gender") }}
+
+                <br>
+                {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
     
             </form>
 

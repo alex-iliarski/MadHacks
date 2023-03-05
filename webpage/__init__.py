@@ -1,7 +1,7 @@
 from flask import Flask
 from pymongo import MongoClient
-from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
+# from flask_bcrypt import Bcrypt
+# from flask_login import LoginManager
 import os
 
 
