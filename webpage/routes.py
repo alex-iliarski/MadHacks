@@ -71,7 +71,7 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
     form = TextMessageForm()
     if request.method == "POST":

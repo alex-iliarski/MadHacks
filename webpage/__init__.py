@@ -9,7 +9,7 @@ import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(12).hex()
 
-GoogleMaps(app, key="AIzaSyDVkiOWeis2ECi6UxP8CCdAYGZl3HmeTho")
+GoogleMaps(app, key=os.environ.get("GOOGLE_MAPS_API_KEY"))
 client = MongoClient('localhost', 27017)
 db = client.flask_db
 # todos = db.todos
